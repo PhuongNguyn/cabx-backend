@@ -3,8 +3,8 @@ const config = require('../../config/appconfig');
 const { env } = config.db
 
 
-const sequelize = new Sequelize(env?.database, 'cabx-dev', 'cabx2022%@', {
-    host: env?.host,
+const sequelize = new Sequelize('deidqukskpsftr', 'bxsjnsbkfwjmmx', 'f77455dbfc0f2c9eeeae518f89625d32a8f9a361221df147fc58585f17f9cc92', {
+    host: 'ec2-44-208-88-195.compute-1.amazonaws.com',
     dialect: 'postgres',
     define:{
         underscored: true,

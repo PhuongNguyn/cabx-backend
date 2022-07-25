@@ -1,0 +1,32 @@
+{
+  "name": "cabx-backend",
+  "version": "1.0.0",
+  "description": "Admin page for Cabx",
+  "scripts": {
+    "start": "nodemon --inspect ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "i18n": "^0.15.0",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "libphonenumber-js": "^1.10.9",
+    "module-name": "^0.0.1-security",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.19",
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.3",
+    "some-module": "^0.0.3",
+    "uuidv4": "^6.2.13",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  }
+}

@@ -353,14 +353,14 @@ class CustomerController{
             userId: result.id,
             userType: 'customer',
         }, config.auth.access_token_secret,{
-            expiresIn: config.auth.access_token_expiresin,
+            expiresIn: '1d',
         })
 
         const refreshToken = jwt.sign({
             userId: result.id,
             userType: 'customer',
         }, config.auth.refresh_token_secret,{
-            expiresIn: config.auth.refresh_token_expiresin,
+            expiresIn: '2d',
         })
 
         return res.status(200).json({

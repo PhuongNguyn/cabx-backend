@@ -346,14 +346,16 @@ class DriverController{
          const accessToken = jwt.sign({
              userId: result.id,
              userType: 'driver',
-             exp: config.auth.access_token_expiresin,
-         }, config.auth.access_token_secret)
+         }, config.auth.access_token_secret,{
+            expiresIn: '1d',
+         })
  
          const refreshToken = jwt.sign({
              userId: result.id,
              userType: 'driver',
-             exp: config.auth.refresh_token_expiresin,
-         }, config.auth.refresh_token_secret)
+         }, config.auth.refresh_token_secret,{
+            expiresIn: '2d',
+         })
 
          return res.status(200).json({
              status: {

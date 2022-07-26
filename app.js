@@ -6,6 +6,13 @@ var logger = require('morgan');
 const sequelize = require('./inflastructure/database/conn')
 const Route = require('./routes/index')
 const i18n = require('./i18n/i18n')
+const cors = require('cors')
+const origins = ['http://localhost:3030', 'http://localhost:3000']
+const corsOptions = {
+  origin: origins,
+  credentials:true,            
+  optionSuccessStatus:200
+}
 
 
 
@@ -15,6 +22,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors(corsOptions))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

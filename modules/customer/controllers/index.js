@@ -211,9 +211,10 @@ class CustomerController{
                 }
             })
 
-            const user = User.findOne({
+            const user = await User.findOne({
                 where:{
                     phone_number: decodedToken.phone_number,
+                    user_type: 'customer'
                 }
             })
 

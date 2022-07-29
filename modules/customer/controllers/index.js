@@ -211,11 +211,18 @@ class CustomerController{
                 }
             })
 
+            const user = User.findOne({
+                where:{
+                    phone_number: decodedToken.phone_number,
+                }
+            })
+
             return res.status(200).json({
                 status:{
                     code: resCode.OK_226,
                     message: i18n.__("CreateCustomerPasswordSuccess")
-                }
+                },
+                data:{...user.dataValues, password: undefined}
             })
         } catch (error) {
             console.log(error)

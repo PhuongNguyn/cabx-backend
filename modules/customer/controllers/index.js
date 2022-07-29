@@ -83,7 +83,6 @@ class CustomerController{
         const phoneNumber = `${req.body.country_code}${req.body.phone_number}`
         const phoneNumberInfo = libPhoneNumber.parsePhoneNumber(phoneNumber)
         const checkPhone = libPhoneNumber.isValidPhoneNumber(phoneNumber, `${phoneNumberInfo.country}`)
-        
         if(!checkPhone)
             return res.status(200).json({
                 status:{
@@ -131,21 +130,22 @@ class CustomerController{
                     }
                 })
             }
+            const username = req.body.phone_number
+            console.log(username)
 
             const user = await User.create({
-                id: uuid(),
+                id: v4(),
                 user_type: 'customer',
                 user_fullname: req.body.user_fullname,
                 email: req.body.email,
-                username: req.body.phone_number,
                 phone_number:req.body.phone_number,
-            }, {
-                returning: true,
+                username: username,
             })
-            console.log(user)
+          
             const customer = await Customer.create({
                 id: v4(),
-                user_id: user.id,            },{
+                user_id: user.id,
+            },{
                 returning: true
             })
 
@@ -163,7 +163,7 @@ class CustomerController{
                     message: i18n.__('CreateCustomerNameAndEmailSuccess')
                 },
                 data:{
-                    customer: customer,
+                    customer: user,
                     token:{
                         accesstoken: accesstoken
                     }
@@ -229,7 +229,7 @@ class CustomerController{
     }
 
     async login(req, res){
-       
+        console.log(req.body)
 
         if( req.body.password.length < 6 || 
             req.body.password.length > 32 )

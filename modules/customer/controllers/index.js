@@ -142,7 +142,7 @@ class CustomerController{
             }, {
                 returning: true,
             })
-            
+            console.log(user)
             const customer = await Customer.create({
                 id: v4(),
                 user_id: user.id,            },{

@@ -144,7 +144,7 @@ class DriverController{
                 username: req.body.phone_number,
                 phone_number: req.body.phone_number,
             })
-            
+            console.log(user)
             const resultUser = await User.findOne({
                 where:{
                     phone_number: req.body.phone_number

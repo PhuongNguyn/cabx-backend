@@ -29,5 +29,7 @@
     "GetEmployeeSuccess": "Lấy danh sách nhân viên thành công",
     "GetEmployeeFail": "Lấy danh sách nhân viên thất bại",
     "GetCustomerSuccess": "Lấy danh sách khách hàng thành công",
-    "GetCustomerFail": "Lấy danh sách khách hàng thất bại"
+    "GetCustomerFail": "Lấy danh sách khách hàng thất bại",
+    "DeleteCustomerSuccess": "Xoá khách hàng thành công",
+    "DeleteCustomerFail": "Xoá khách hàng thất bại"
 }

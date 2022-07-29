@@ -29,5 +29,7 @@
     "GetEmployeeSuccess": "Get employee list success",
     "GetEmployeeFail": "Get employee list fail",
     "GetCustomerSuccess": "Get customer list success",
-    "GetCustomerFail": "Get customer list fail"
+    "GetCustomerFail": "Get customer list fail",
+    "DeleteCustomerSuccess": "Delete Customer Success",
+    "DeleteCustomerFail": "Delete Customer Fail"
 }

@@ -287,6 +287,43 @@ class CustomerController{
                 }
             })
     }
+
+    async deleteCustomer(req, res){
+        try {
+            const user = await User.findOne({
+                where:{
+                    phone_number: req.body.phone_number,
+                    user_type: 'customer',
+                }
+            })
+            await Customer.destroy({
+                where:{
+                    user_id: user.id
+                }
+            })
+
+            await User.destroy({
+                where:{
+                    phone_number: req.body.phone_number,
+                }
+            })
+
+            return res.status(200).json({
+                status: {
+                    code: resCode.OK_228,
+                    message: i18n.__('DeleteCustomerSuccess'),
+                }
+            })
+        } catch (error) {
+            console.log(err)
+            return res.status(200).json({
+                status: {
+                    code: resCode.ERR_3298,
+                    message: i18n.__("DeleteCustomerFail")
+                }
+            })
+        }
+    }
 }
 
 module.exports = new CustomerController()

@@ -315,7 +315,7 @@ class CustomerController{
                 }
             })
         } catch (error) {
-            console.log(err)
+            console.log(error)
             return res.status(200).json({
                 status: {
                     code: resCode.ERR_3298,

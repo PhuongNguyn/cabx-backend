@@ -24,7 +24,6 @@ module.exports = {
       },
       address:{
           type: DataTypes.TEXT,
-          allowNull: false,
       },
       lastactivity: {
           type: DataTypes.DATE,

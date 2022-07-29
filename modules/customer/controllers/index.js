@@ -137,8 +137,8 @@ class CustomerController{
                 user_type: 'customer',
                 user_fullname: req.body.user_fullname,
                 email: req.body.email,
-                username: phoneNumber,
-                phone_number: phoneNumber,
+                username: req.body.phone_number,
+                phone_number:req.body.phone_number,
             }, {
                 returning: true,
             })
@@ -152,7 +152,7 @@ class CustomerController{
             })
 
             const accesstoken = jwt.sign({
-                phone_number: phoneNumber,
+                phone_number: req.body.phone_number,
                 customer_id: customer.id,
             }, config.auth.access_token_secret,
             {

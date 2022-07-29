@@ -84,8 +84,6 @@ class DriverController{
     }
 
     async registerInfo(req, res){
-        const accesstoken = req.headers.accesstoken.split(' ')[1]
-        const decodedToken = jwt_decode(accesstoken)
         const phoneNumber = `${req.body.country_code}${req.body.phone_number}`
         const phoneNumberInfo = libPhoneNumber.parsePhoneNumber(phoneNumber)
         const checkPhone = libPhoneNumber.isValidPhoneNumber(phoneNumber, `${phoneNumberInfo.country}`)
@@ -143,13 +141,13 @@ class DriverController{
                 user_type: 'driver',
                 user_fullname: req.body.user_fullname,
                 email: req.body.email,
-                username: phoneNumber,
-                phone_number: phoneNumber
+                username: req.body.phone_number,
+                phone_number: req.body.phone_number,
             })
             
             const resultUser = await User.findOne({
                 where:{
-                    phone_number: phoneNumber
+                    phone_number: req.body.phone_number
                 }
             })
 
@@ -160,7 +158,7 @@ class DriverController{
 
             
             const accesstoken = jwt.sign({
-                phone_number: decodedToken.phone_number,
+                phone_number: req.body.phone_number,
                 driver_id: driver.id,
             }, config.auth.access_token_secret,
             {

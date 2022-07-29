@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "cabx-dev",
-    "password": "cabx2022%@",
-    "database": "cabx-dev",
-    "host": "localhost",
+    "username": "sbrbabst",
+    "password": "FOfAajwuZjVtxKag0ECUiMawYjZjQa1m",
+    "database": "sbrbabst",
+    "host": "kandula.db.elephantsql.com",
     "port": 5432,
     "dialect": "postgres"
   }

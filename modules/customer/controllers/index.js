@@ -292,7 +292,7 @@ class CustomerController{
         try {
             const user = await User.findOne({
                 where:{
-                    phone_number: req.query.phone_number,
+                    phone_number: req.params.phone_number,
                     user_type: 'customer',
                 }
             })
@@ -304,7 +304,7 @@ class CustomerController{
 
             await User.destroy({
                 where:{
-                    phone_number: req.query.phone_number,
+                    phone_number: req.params.phone_number,
                 }
             })
 

@@ -20,7 +20,6 @@ Customer.init({
     },
     address:{
         type: DataTypes.TEXT,
-        allowNull: false,
     },
 },{
     sequelize,

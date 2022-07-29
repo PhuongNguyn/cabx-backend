@@ -4,10 +4,9 @@ const authController = require('../../../middlewares/auth')
 
 route.post('/login', CustomerController.login)
 route.get('/getProfile', authController.authentication,CustomerController.getProfile)
-route.patch('/register-name-and-email', authController.authentication, CustomerController.registerNameAndEmail)
-route.post('/registerPhoneNumber', CustomerController.inputPhoneNumber)
-route.post('/verifyPhoneNumber', authController.authentication, CustomerController.verifyPhoneNumber)
+route.post('/register-info', CustomerController.registerInfo)
 route.patch('/register', authController.authentication, CustomerController.register)
+route.get('/getEmployee', authController.authentication, CustomerController.getCustomer)
 
 
 module.exports = route

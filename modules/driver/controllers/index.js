@@ -42,6 +42,50 @@ class DriverController{
     }
 
     async inputPhoneNumber(req, res){
+        
+       
+        const accesstoken = jwt.sign({
+            phone_number: req.body.phone_number,
+        }, config.auth.access_token_secret,
+        {
+            expiresIn: '15m',
+        })
+
+        try {
+            if(!queryPhoneNumber){
+                const result = await User.create({
+                    id: uuid(),
+                    phone_number: req.body.phone_number,
+                    country_code: req.body.country_code,
+                })
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(200).json({
+                status:{
+                    code: resCode.ERR_318,
+                    message: i18n.__('FailedRegistPhoneNumber')
+                }
+            })
+        }
+
+        return res.status(200).json({
+            status:{
+                code: resCode.OK_213,
+                message: i18n.__('ValidPhoneNumber')
+            },
+            data: {
+                phone_number: req.body.phone_number,
+                token:{
+                    accesstoken: accesstoken
+                }
+            }
+        })
+    }
+
+    async registerInfo(req, res){
+        const accesstoken = req.headers.accesstoken.split(' ')[1]
+        const decodedToken = jwt_decode(accesstoken)
         const phoneNumber = `${req.body.country_code}${req.body.phone_number}`
         const phoneNumberInfo = libPhoneNumber.parsePhoneNumber(phoneNumber)
         const checkPhone = libPhoneNumber.isValidPhoneNumber(phoneNumber, `${phoneNumberInfo.country}`)
@@ -60,7 +104,7 @@ class DriverController{
             }
         })
 
-        if(queryPhoneNumber && queryPhoneNumber.username)
+        if(queryPhoneNumber)
             return res.status(200).json({
                 status:{
                     code: resCode.ERR_317,
@@ -68,116 +112,6 @@ class DriverController{
                 }
             })
         
-       
-
-        const min = 100000;
-        const max = 900000;
-        const verification_code = Math.floor(Math.random() * min) + max
-
-        const accesstoken = jwt.sign({
-            phone_number: req.body.phone_number,
-        }, config.auth.access_token_secret,
-        {
-            expiresIn: '15m',
-        })
-
-
-        try {
-            if(!queryPhoneNumber){
-                const result = await User.create({
-                    id: uuid(),
-                    phone_number: req.body.phone_number,
-                    country_code: req.body.country_code,
-                    verify_code: verification_code,
-                })
-            }
-        } catch (error) {
-            console.log(error)
-            return res.status(200).json({
-                status:{
-                    code: resCode.ERR_318,
-                    message: i18n.__('FailedRegistPhoneNumber')
-                }
-            })
-        }
-
-
-        return res.status(200).json({
-            status:{
-                code: resCode.OK_213,
-                message: i18n.__('ValidPhoneNumber')
-            },
-            data: {
-                phone_number: req.body.phone_number,
-                token:{
-                    accesstoken: accesstoken
-                }
-            }
-        })
-    }
-
-    async verifyPhoneNumber(req, res){
-        const accesstoken = req.headers.accesstoken.split(' ')[1]
-        const decodedToken = jwt_decode(accesstoken)
-        try {
-
-            const verify_code = User.findOne({
-                where:{
-                    verify_code: req.body.verify_code,
-                    phone_number: decodedToken.phone_number,
-                }
-            })
-           
-            if(!verify_code)
-                return res.status(200).json({
-                    status: {
-                        code: resCode.ERR_319,
-                        message: i18n.__('InvalidVerifyCode')
-                    }
-                })
-
-            const accesstoken = jwt.sign({
-               phone_number: decodedToken.phone_number,
-               verified: true,
-            }, config.auth.access_token_secret,
-            {
-                expiresIn: '60m',
-            })
-
-            return res.status(200).json({
-                status: {
-                    code: resCode.OK_214,
-                    message: i18n.__('VerifySuccess')
-                },
-                data:{
-                    phone_number: decodedToken.phone_number,
-                    token: accesstoken
-                }
-            })
-        } catch (error) {
-            console.log(error)   
-            return res.status(200).json({
-                status:{
-                    code: resCode.ERR_3191,
-                    message: i18n.__('InvalidPhoneNumberToken'),
-                }
-            })
-        }
-       
-    }
-
-    async registerNameAndEmail(req, res){
-        const accesstoken = req.headers.accesstoken.split(' ')[1]
-        const decodedToken = jwt_decode(accesstoken)
-
-
-        if(!decodedToken.verified)
-            return res.status(200).json({
-                status:{
-                    code: resCode.ERR_3196,
-                    message: i18n.__('PhoneNumberIsNotVerified')
-                }
-            })
 
         if(!validator.isEmail(req.body.email))
             return res.status(200).json({
@@ -204,20 +138,18 @@ class DriverController{
                 })
             }
 
-            await User.update({
+            const user = await User.create({
+                id: uuid(),
                 user_type: 'driver',
                 user_fullname: req.body.user_fullname,
                 email: req.body.email,
-                username: decodedToken.phone_number,
-            },{
-                where: {
-                    phone_number: decodedToken.phone_number
-                }
+                username: phoneNumber,
+                phone_number: phoneNumber
             })
             
             const resultUser = await User.findOne({
                 where:{
-                    phone_number: decodedToken.phone_number
+                    phone_number: phoneNumber
                 }
             })
 
@@ -251,7 +183,7 @@ class DriverController{
             console.log(error)
             return res.status(200).json({
                 status:{
-                    code: resCode.ERR_3295,
+                    code: resCode.ERR_3195,
                     message: i18n.__('CreateCustomerNameAndEmailFail')
                 }
             })
@@ -347,14 +279,14 @@ class DriverController{
              userId: result.id,
              userType: 'driver',
          }, config.auth.access_token_secret,{
-            expiresIn: '1d',
+             expiresIn: '1d'
          })
  
          const refreshToken = jwt.sign({
              userId: result.id,
              userType: 'driver',
          }, config.auth.refresh_token_secret,{
-            expiresIn: '2d',
+             expiresIn: '2d'
          })
 
          return res.status(200).json({

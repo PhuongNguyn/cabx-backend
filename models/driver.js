@@ -25,7 +25,6 @@ Driver.init({
     },
     address:{
         type: DataTypes.TEXT,
-        allowNull: false,
         defaultValue: ''
     },
     lastactivity: {

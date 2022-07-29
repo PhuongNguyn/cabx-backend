@@ -145,9 +145,7 @@ class CustomerController{
             
             const customer = await Customer.create({
                 id: v4(),
-                user_id: user.id,
-                address: req.body.address
-            },{
+                user_id: user.id,            },{
                 returning: true
             })
 

@@ -222,7 +222,7 @@ class CustomerController{
                     code: resCode.OK_226,
                     message: i18n.__("CreateCustomerPasswordSuccess")
                 },
-                data:{...user.dataValues, password: undefined}
+                data:{...user, password: undefined}
             })
         } catch (error) {
             console.log(error)

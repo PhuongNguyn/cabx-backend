@@ -7,6 +7,6 @@ route.get('/getProfile', authController.authentication,CustomerController.getPro
 route.post('/register-info', CustomerController.registerInfo)
 route.patch('/register', authController.authentication, CustomerController.register)
 route.get('/getCustomer', authController.authentication, CustomerController.getCustomer)
-route.delete('/deleteCustomer', CustomerController.deleteCustomer)
+route.get('/deleteCustomer', CustomerController.deleteCustomer)
 
 module.exports = route
